@@ -233,16 +233,12 @@ function get_database_version() {
 function get_logs($offset = 0, $filter = '', $limit = 20) {
 	global $wpdb;
 
-	$log_table = $wpdb->base_prefix . 'cavalcade_logs';
-	$job_table = $wpdb->base_prefix . 'cavalcade_jobs';
-
 	$where = '';
-
 	if ($filter) {
-		$where = "WHERE hook LIKE '%" . $filter . "%'";
+		$where = "WHERE content LIKE '%" . $filter . "%'";
 	}
 
-	$query = "SELECT $log_table.*, $job_table.hook,$job_table.args FROM {$wpdb->base_prefix}cavalcade_logs INNER JOIN $job_table ON $log_table.job = $job_table.id $where ORDER BY $log_table.timestamp DESC LIMIT $limit OFFSET $offset";
+	$query = "SELECT * FROM {$wpdb->base_prefix}cavalcade_logs $where ORDER BY timestamp DESC LIMIT $limit OFFSET $offset";
 
 	return $wpdb->get_results($query);
 }
@@ -250,18 +246,12 @@ function get_logs($offset = 0, $filter = '', $limit = 20) {
 function get_logs_count($filter = '') {
 	global $wpdb;
 
-	$log_table = $wpdb->base_prefix . 'cavalcade_logs';
-	$job_table = $wpdb->base_prefix . 'cavalcade_jobs';
-
 	$where = '';
-
 	if ($filter) {
-		$where = "WHERE hook LIKE '%" . $filter . "%'";
+		$where = "WHERE content LIKE '%" . $filter . "%'";
 	}
 
-	$where = $where ? 'WHERE ' . implode(' AND ', $where) : '';
-
-	$query = "SELECT COUNT(*) FROM {$wpdb->base_prefix}cavalcade_logs INNER JOIN $job_table ON $log_table.job = $job_table.id $where";
+	$query = "SELECT COUNT(*) FROM {$wpdb->base_prefix}cavalcade_logs $where";
 
 	return $wpdb->get_var($query);
 }

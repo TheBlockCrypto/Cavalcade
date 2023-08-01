@@ -34,8 +34,6 @@
 				<th>Status</th>
 				<th>Timestamp</th>
 				<th>Content</th>
-				<th>Hook</th>
-				<th>Args</th>
 			</tr>
 			<?php if (count($logs) > 0) :
 				foreach ($logs as $log) :
@@ -46,8 +44,6 @@
 						<td><?php echo $log->status; ?></td>
 						<td><?php echo $log->timestamp; ?></td>
 						<td><?php echo $log->content; ?></td>
-						<td><?php echo $log->hook; ?></td>
-						<td><?php echo $log->args; ?></td>
 					</tr>
 				<?php endforeach;
 			else : ?>
